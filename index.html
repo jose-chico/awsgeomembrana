@@ -4,12 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- SEO Meta Tags -->
-<meta name="description" content="Conheça os modelos de tanques elevados e escavados da AWS GEOMEMBRANA. Soluções em geomembranas com segurança, inovação e eficiência.">
-<meta name="keywords" content="tanques elevados, tanques escavados, geomembrana, AWS GEOMEMBRANA, impermeabilização, controle de água, soluções ambientais">
-<meta name="author" content="AWS GEOMEMBRANA">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://awsgeomembrana.onrender.com">
-
+  <meta name="description" content="Conheça os modelos de tanques elevados e escavados da AWS GEOMEMBRANA. Soluções em geomembranas com segurança, inovação e eficiência.">
+  <meta name="keywords" content="tanques elevados, tanques escavados, geomembrana, AWS GEOMEMBRANA, impermeabilização, controle de água, soluções ambientais">
+  <meta name="author" content="AWS GEOMEMBRANA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://awsgeomembrana.onrender.com">
   <title>awsgeomembrana</title>
   <style>
     /* Reset básico */
@@ -157,6 +156,7 @@
       width: 100%;
       height: auto;
       border-radius: 10px;
+      cursor: pointer;
     }
 
     .pagination {
@@ -195,6 +195,29 @@
     .pagination .page-number.active {
       background-color: #8ae234;
       color: white;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .modal.active {
+      display: flex;
     }
 
     /* Estilos para a seção sobre a empresa */
@@ -309,80 +332,76 @@
     <div class="pagination" id="escavadosPagination"></div>
   </div>
 
+  <!-- Modal para visualização em tela cheia -->
+  <div class="modal" id="imageModal">
+    <img id="modalImage" src="" alt="Imagem em tela cheia">
+  </div>
+
   <!-- Rodapé -->
   <footer>
     <div class="contact-info">
-      <p>Telefone: <strong>63 992661798</strong></p>
+      <p>Entre em contato: (63) 99266-1798</p>
+      <p>Email: contato@awsgeomembrana.com.br</p>
     </div>
     <div class="social-links">
-      <a href="https://facebook.com" target="_blank">Facebook</a>
-      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="#" target="_blank">Facebook</a>
+      <a href="#" target="_blank">Instagram</a>
+      <a href="#" target="_blank">LinkedIn</a>
     </div>
   </footer>
 
   <script>
-    // Script para alternar o menu hambúrguer
-    document.querySelector('.menu-toggle').addEventListener('click', function() {
-      document.querySelector('.menu').classList.toggle('active');
-    });
+    // Dados simulados dos tanques
+    const elevados = [
+      { id: 1, name: "Tanque Elevado 1", image: "tanque 01.png" },
+      { id: 2, name: "Tanque Elevado 2", image: "tanque 01.png" },
+      { id: 3, name: "Tanque Elevado 3", image: "tanque 01.png" }
+    ];
 
-    // Dados para os tanques
-    const itemsPerPage = 4;
+    const escavados = [
+      { id: 1, name: "Tanque Escavado 1", image: "tanque 02.png" },
+      { id: 2, name: "Tanque Escavado 2", image: "tanque 02.png" },
+      { id: 3, name: "Tanque Escavado 3", image: "tanque 02.png" }
+    ];
 
-    const data = {
-      elevados: [
-        { img: 'tanque 01.png', text: 'Tanque elevado modelo 1' },
-        { img: 'tanque 01.png', text: 'Tanque elevado modelo 2' },
-        { img: 'tanque 01.png', text: 'Tanque elevado modelo 3' },
-        { img: 'tanque 01.png', text: 'Tanque elevado modelo 4' },
-        { img: 'tanque 01.png', text: 'Tanque elevado modelo 5' },
-        { img: 'tanque 01.png', text: 'Tanque elevado modelo 6' },
-      ],
-      escavados: [
-        { img: 'tanque 02.png', text: 'Tanque escavado modelo 1' },
-        { img: 'tanque 02.png', text: 'Tanque escavado modelo 2' },
-        { img: 'tanque 02.png', text: 'Tanque escavado modelo 3' },
-        { img: 'tanque 02.png', text: 'Tanque elevado modelo 4' },
-        { img: 'tanque 02.png', text: 'Tanque elevado modelo 5' },
-        { img: 'tanque 02.png', text: 'Tanque elevado modelo 6' },
-      ]
-    };
-
-    // Função para renderizar os cartões
-    function renderCards(type, page = 1) {
-      const start = (page - 1) * itemsPerPage;
-      const end = page * itemsPerPage;
-      const cardsContainer = document.querySelector(`#${type}Cards`);
-      const paginationContainer = document.querySelector(`#${type}Pagination`);
-      cardsContainer.innerHTML = '';
-
-      // Renderizando os cartões
-      data[type].slice(start, end).forEach(item => {
+    // Função para gerar os cards de tanques
+    function renderCards(tanks, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      tanks.forEach(tank => {
         const card = document.createElement('div');
         card.classList.add('card');
         card.innerHTML = `
-          <img src="${item.img}" alt="${item.text}">
-          <p>${item.text}</p>
+          <h3>${tank.name}</h3>
+          <img src="${tank.image}" alt="${tank.name}" />
         `;
-        cardsContainer.appendChild(card);
-      });
+        container.appendChild(card);
 
-      // Calculando a paginação
-      const totalPages = Math.ceil(data[type].length / itemsPerPage);
-      paginationContainer.innerHTML = '';
-      for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement('button');
-        pageButton.textContent = i;
-        pageButton.classList.add('page-number');
-        if (i === page) pageButton.classList.add('active');
-        pageButton.addEventListener('click', () => renderCards(type, i));
-        paginationContainer.appendChild(pageButton);
-      }
+        // Evento para abrir o modal
+        card.querySelector('img').addEventListener('click', () => {
+          openModal(tank.image);
+        });
+      });
     }
 
-    // Inicializando as páginas de tanques
-    renderCards('elevados');
-    renderCards('escavados');
+    // Função para abrir o modal
+    function openModal(imageSrc) {
+      const modal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+      modalImage.src = imageSrc;
+      modal.classList.add('active');
+    }
+
+    // Função para fechar o modal
+    document.getElementById("imageModal").addEventListener('click', (event) => {
+      if (event.target === event.currentTarget) {
+        event.currentTarget.classList.remove('active');
+      }
+    });
+
+    // Renderizando os cards de tanques
+    renderCards(elevados, 'elevadosCards');
+    renderCards(escavados, 'escavadosCards');
   </script>
 </body>
 </html>
