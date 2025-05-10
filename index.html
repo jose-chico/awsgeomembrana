@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modelos de Tanques</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Estilo para o header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #333;
+      color: #fff;
+      position: relative;
+    }
+
+    header .logo img {
+      height: 50px; /* Tamanho da logo */
+    }
+
+    header nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    header nav a:hover {
+      color: #8ae234;
+    }
+
+    /* Menu hambúrguer para telas pequenas */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+
+    /* Estilo para o menu responsivo */
+    .menu {
+      display: flex;
+    }
+
+    .menu.active {
+      display: block;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 20px;
+    }
+
+    .menu a {
+      display: block;
+      padding: 10px;
+      font-size: 18px;
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .menu a:hover {
+      background-color: #8ae234;
+    }
+
+    /* Estilo responsivo */
+    @media (max-width: 768px) {
+      header nav {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .menu {
+        display: none;
+      }
+
+      .menu.active {
+        display: block;
+      }
+    }
+
+    /* Estilos gerais da página */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #e0ffe0;
+      border: 2px solid #8ae234;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pagination button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #ccc;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .pagination button:hover {
+      background-color: #8ae234;
+    }
+
+    .pagination button:disabled {
+      background-color: #eee;
+      cursor: not-allowed;
+    }
+
+    .pagination .page-number {
+      margin: 0 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: #ccc;
+      border-radius: 5px;
+    }
+
+    .pagination .page-number.active {
+      background-color: #8ae234;
+      color: white;
+    }
+
+    /* Estilos para a seção sobre a empresa */
+    .sobre-empresa {
+      background-color: #fff;
+      padding: 30px;
+      margin-top: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .sobre-empresa:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .sobre-empresa h2 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .sobre-empresa p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+      text-align: justify;
+      margin-bottom: 20px;
+    }
+
+    .sobre-empresa .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #8ae234;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+    }
+
+    .sobre-empresa .btn:hover {
+      background-color: #7dbd29;
+    }
+
+    /* Estilo para o rodapé */
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    footer .contact-info {
+      margin-bottom: 10px;
+    }
+
+    footer .social-links a {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer .social-links a:hover {
+      color: #8ae234;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="caminho/da/sua/logo.png" alt="Logo da Empresa">
+    </div>
+    <div class="menu-toggle">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav class="menu">
+      <a href="#inicio">Início</a>
+      <a href="#contatos">Contatos</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#fale-conosco">Fale Conosco</a>
+    </nav>
+  </header>
+
+  <!-- Seção sobre a empresa -->
+  <div class="sobre-empresa">
+    <h2>AWS GEOMEMBRANA</h2>
+    <p>AWS GEOMEMBRANA está sempre pronta para oferecer as melhores e mais avançadas soluções técnicas voltadas para obras que envolvam a condução e o controle de águas e solos. Para isso, sua equipe avalia as necessidades de cada caso, sugerindo os procedimentos mais adequados. Assim, é possível trazer ideias inovadoras, que garantam mais segurança, menor tempo de execução, maior proteção ao meio ambiente, além de menores custos.</p>
+    <a href="#contatos" class="btn">Saiba mais</a>
+  </div>
+
+  <!-- Conteúdo da página -->
+  <div class="container" id="elevados">
+    <h2>Tanques Elevados</h2>
+    <div class="cards" id="elevadosCards"></div>
+    <div class="pagination" id="elevadosPagination"></div>
+  </div>
+
+  <div class="container" id="escavados">
+    <h2>Tanques Escavados</h2>
+    <div class="cards" id="escavadosCards"></div>
+    <div class="pagination" id="escavadosPagination"></div>
+  </div>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="contact-info">
+      <p>Telefone: <strong>63 992661798</strong></p>
+    </div>
+    <div class="social-links">
+      <a href="https://facebook.com" target="_blank">Facebook</a>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+    </div>
+  </footer>
+
+  <script>
+    // Script para alternar o menu hambúrguer
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      document.querySelector('.menu').classList.toggle('active');
+    });
+
+    // Dados para os tanques
+    const itemsPerPage = 4;
+
+    const data = {
+      elevados: [
+        { img: 'tanque 01.png', text: 'Tanque elevado modelo 1' },
+        { img: 'tanque 01.png', text: 'Tanque elevado modelo 2' },
+        { img: 'tanque 02.png', text: 'Tanque elevado modelo 3' },
+        { img: 'tanque 02.png', text: 'Tanque elevado modelo 4' },
+        { img: 'tanque 03.png', text: 'Tanque elevado modelo 5' },
+      ],
+      escavados: [
+        { img: 'tanque 01.png', text: 'Tanque escavado modelo 1' },
+        { img: 'tanque 02.png', text: 'Tanque escavado modelo 2' },
+        { img: 'tanque 02.png', text: 'Tanque escavado modelo 3' },
+        { img: 'tanque 02.png', text: 'Tanque escavado modelo 4' },
+        { img: 'tanque 01.png', text: 'Tanque escavado modelo 5' },
+      ]
+    };
+
+    // Função para renderizar os cartões
+    function renderCards(type, page = 1) {
+      const start = (page - 1) * itemsPerPage;
+      const end = page * itemsPerPage;
+      const cardsContainer = document.querySelector(`#${type}Cards`);
+      const paginationContainer = document.querySelector(`#${type}Pagination`);
+      cardsContainer.innerHTML = '';
+
+      // Renderizando os cartões
+      data[type].slice(start, end).forEach(item => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.text}">
+          <p>${item.text}</p>
+        `;
+        cardsContainer.appendChild(card);
+      });
+
+      // Calculando a paginação
+      const totalPages = Math.ceil(data[type].length / itemsPerPage);
+      paginationContainer.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.classList.add('page-number');
+        if (i === page) pageButton.classList.add('active');
+        pageButton.addEventListener('click', () => renderCards(type, i));
+        paginationContainer.appendChild(pageButton);
+      }
+    }
+
+    // Inicializando as páginas de tanques
+    renderCards('elevados');
+    renderCards('escavados');
+  </script>
+</body>
+</html>
